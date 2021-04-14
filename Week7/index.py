@@ -59,10 +59,12 @@ def errorpage():
 @app.route('/signin', methods=["POST"])
 def signinpage():
       account = request.form['account']   
+      session['account'] = account
+      print(session['account'])
       psword = request.form['password']  
       Sql= "SELECT name FROM user WHERE username= %s AND password = %s"
       adr=(account,psword)
-      print(adr)   
+      #print(adr)   
       cursor.execute(Sql,adr)
       myresult = cursor.fetchall()  
       if len(account) == 0 or len(psword)== 0 :
@@ -93,8 +95,9 @@ def signoutpage():
      
 
 
-@app.route('/api/users')
+@app.route('/api/users',methods=['GET', 'POST'])
 def apiuser():
+   if request.method == "GET" :
       #取得帳號
       account = request.args.get("username","")
       Sql= "SELECT id,name,username FROM user WHERE username= %s "
@@ -116,4 +119,32 @@ def apiuser():
             data={"data":SS}
             nulldata =  json.dumps(data)
             return nulldata
+   if request.method == "POST":
+      data = request.json
+      changename = data['name']  #要更改的姓名
+      print(changename)
+      account = session['account'] #帳號
+      sql = "update user set name = %s where username = %s "
+      adr=(changename,account)
+      cursor.execute(sql,adr)
+      mydb.commit()
+      print(cursor.rowcount, "record(s) affected")
+      newsql = "select name from user where username = %s"
+      newadr=(account,)
+      cursor.execute(newsql,newadr)
+      myresult = cursor.fetchall()  
+      if len(myresult) == 1:
+         for i in myresult:
+            aftername = i[0]
+            print(aftername)
+            if aftername == changename:
+               data={"ok":True}
+               backdata =  json.dumps(data)
+               return backdata
+      else:
+          data={"error":True}
+          backdata =  json.dumps(data)
+          return backdata
+
+
 app.run(port=3000)
