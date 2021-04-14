@@ -1,0 +1,66 @@
+<style>
+    html, body 
+		 {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+		 }
+    .top
+		{ background-color: #1c1c52;
+			padding-block: 20px;
+			text-align: center;
+			font-size: 50px;
+			color: white;
+		 }
+     
+    .formstyle
+	       { 
+				margin-top: 30px;
+                margin-left: 550px;
+           } 
+    .formtitle
+			{
+				margin-left: 90px;
+				margin-bottom: 15px;
+				font-weight: bold;
+			}
+    .borderstyle
+	        {
+			     border-bottom: 1px solid;
+	        }
+    </style>
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charest="utf-8" />
+    <title>會員系統</title>
+    
+    </head>
+    <body>
+		<div class="top">歡迎光臨，請註冊登入系統</div>
+    
+			<div class="formstyle">
+			     <div class="formtitle">註冊帳號</div>
+				 <form action="/signup" method="POST">
+				  姓名 &nbsp; <input type="text" name="username"/><br><br>
+				  帳號 &nbsp; <input type="text" name="useraccount"/><br><br>
+				  密碼 &nbsp; <input type="text" name="userpassword"/><br><br>
+				  <button style="margin-left:100px;">註冊</button>
+				 </form>
+		   </div>
+           <div class="borderstyle"></div>
+		   <div class="formstyle">
+			     <div class="formtitle">登入系統</div>
+				 <form action="/signin" method="POST">
+				  帳號 &nbsp; <input type="text" name="account"/><br><br>
+				  密碼 &nbsp; <input type="text" name="password"/><br><br>
+				  <button style="margin-left:100px;">登入</button>
+				 </form>
+		   </div>
+		   
+    </body>
+    
+    
+    </html>
